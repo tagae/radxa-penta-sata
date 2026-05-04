@@ -1,0 +1,12 @@
+[Unit]
+Description=Radxa Penta SATA HAT
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/radxa-penta-sata --config /etc/radxa-penta-sata.conf --socket /run/radxa-penta-sata.sock serve
+KillSignal=SIGINT
+EnvironmentFile=/etc/radxa-penta-sata.env
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+rm /etc/radxa-penta-sata.env > /dev/null || true
+
+systemctl stop radxa-penta-sata.service
+systemctl disable radxa-penta-sata.service
+
+if [ -d /run/systemd/system ]; then
+  systemctl --system daemon-reload > /dev/null || true
+fi

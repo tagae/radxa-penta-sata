@@ -1,0 +1,21 @@
+#!/bin/bash -e
+
+checkReboot() {
+  echo Installation will take effect after reboot
+}
+
+systemctl enable radxa-penta-sata.service
+
+model=$(tr -d '\0' </proc/device-tree/model)
+
+case "$model" in
+"Raspberry Pi 5"*)
+  raspi-config nonint do_i2c 0 >/dev/null || true
+  cp /usr/share/radxa-penta-sata/env/rpi5.env /etc/radxa-penta-sata.env
+  systemctl start radxa-penta-sata.service
+  ;;
+*)
+  echo "Your board is unsupported: $model"
+  exit 2
+  ;;
+esac
